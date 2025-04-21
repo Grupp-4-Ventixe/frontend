@@ -39,6 +39,9 @@
     --cool-grey-80: #56565c;
     --cool-grey-90: #39393d;
     --cool-grey-100: #131314;
+
+    /* Semantiska färger */
+    --secondary-bg-light: var(--cool-grey-10);
  
     /* ================================
        STATUS COLORS
