@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import AuthLayout from '../partials/layouts/AuthLayout'
 import PortalLayout from '../partials/layouts/PortalLayout'
 import Unauthorized from "../partials/pages/auth/Unauthorized";
+import StyleTest from '../partials/pages/StyleTest';
 
 const NotFound = lazy(() => import('../partials/pages/NotFound'))
 
@@ -51,5 +52,17 @@ export const routes = [
         children: [
             { path: '*', element: <NotFound /> }
         ]
-    }
+    },
+    // Tillfällig stil-testvy för utveckling
+    {
+        layout: null,
+        adminOnly: false,
+        protected: false,
+        children: [
+          {
+            path: '/style-test',
+            element: <StyleTest />
+          }
+        ]
+      }
 ]
