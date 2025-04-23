@@ -1,0 +1,9 @@
+/* RecentBookings component styles */
+
+.recent-bookings {
+    /* Placeholder styles */
+    padding: 16px;
+    background-color: var(--grey-10);
+    border-radius: var(--radius-lg);
+  }
+  
