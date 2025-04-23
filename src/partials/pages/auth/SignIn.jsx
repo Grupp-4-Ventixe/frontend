@@ -11,6 +11,7 @@ const SignIn = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
+<<<<<<< HEAD
         <h2 className="text-2xl font-bold mb-4 text-center">Sign In</h2>
 
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
@@ -50,6 +51,11 @@ const SignIn = () => {
 
       </div>
         
+=======
+        <h2 className="text-2xl font-bold mb-4">Sign In</h2>
+        {/* Your form or content here */}
+      </div>
+>>>>>>> 2bc2c6c (feat: integrate Tailwind CSS for styling)
     </div>
   )
 }
