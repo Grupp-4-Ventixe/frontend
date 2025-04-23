@@ -54,6 +54,9 @@ const SignIn = () => {
 =======
         <h2 className="text-2xl font-bold mb-4">Sign In</h2>
         {/* Your form or content here */}
+        <button className="btn btn-primary">Primary</button>
+
+
       </div>
 >>>>>>> 2bc2c6c (feat: integrate Tailwind CSS for styling)
     </div>

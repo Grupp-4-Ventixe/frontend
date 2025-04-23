@@ -3,10 +3,14 @@
 @import './styles/root.css';
 @import './styles/typography.css';
 @import './styles/utilities.css';
+<<<<<<< HEAD
 @import "tailwindcss";
 @plugin "daisyui" {
     themes: light --default, dark --prefersdark, cupcake;
 }
+=======
+@plugin "daisyui";
+>>>>>>> 6fd1e03 (feat: add daisyUI for enhanced component styling)
 
 
 *, *::before, *::after {
