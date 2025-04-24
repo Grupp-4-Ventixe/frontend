@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import StatBox from '../../../components/AdminDashboard/StatBox';
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <div className="admin-dashboard">
+      <StatBox />
+    </div>
+  );
+};
 
-export default Dashboard
+export default AdminDashboard;
