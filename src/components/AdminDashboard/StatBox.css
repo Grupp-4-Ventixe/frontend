@@ -1,0 +1,42 @@
+.stat-box {
+  background: var(--grey-10); 
+  border-radius: var(--radius-md); 
+  padding: var(--spacing-lg); 
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md); 
+  box-shadow: var(--shadow-default); 
+  min-width: 200px;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-40); 
+  border-radius: var(--radius-lg); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-100); 
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: var(--h4-size); 
+  font-weight: var(--font-bold);
+  margin: 0;
+  color: var(--secondary-110); 
+  line-height: 1.2;
+}
+
+.stat-title {
+  font-size: var(--title-sm); 
+  color: var(--cool-grey-70); 
+  margin: 0;
+  margin-top: var(--spacing-xs); 
+  font-weight: var(--font-medium);
+}
