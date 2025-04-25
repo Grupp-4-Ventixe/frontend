@@ -2,20 +2,11 @@
 @import './styles/root.css';
 @import './styles/typography.css';
 @import './styles/utilities.css';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0c97169 (feat: enhance SignIn page with form fields and collapsible help sections)
 @import "tailwindcss";
 @plugin "daisyui" {
     themes: light --default, dark --prefersdark, cupcake;
 }
-<<<<<<< HEAD
-=======
-@plugin "daisyui";
->>>>>>> 6fd1e03 (feat: add daisyUI for enhanced component styling)
-=======
->>>>>>> 0c97169 (feat: enhance SignIn page with form fields and collapsible help sections)
+
 
 
 *, *::before, *::after {
