@@ -10,24 +10,17 @@ const SignIn = () => {
   catch { }
 
   return (
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         <h2 className="text-2xl font-bold mb-4 text-center">Sign In</h2>
-=======
-=======
->>>>>>> 755a50fa2179b21c2e6c86e6fed53961a4fdcd6e
+
     <div className="flex items-center justify-center min-h-screen bg-gray-200">
       <div className="bg-white p-8 rounded-3xl shadow-md max-w-sm ">
         
         <h2 className="text-2xl text-center font-bold mb-4">Sign In</h2>    
-<<<<<<< HEAD
->>>>>>> 755a50f (feat: enhance SignIn and Unauthorized pages with improved layout and functionality)
-=======
->>>>>>> 755a50fa2179b21c2e6c86e6fed53961a4fdcd6e
+
 
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
                
@@ -87,15 +80,15 @@ const SignIn = () => {
       
 
       </div>
+      </div>
         
-<<<<<<< HEAD
-=======
+
         <h2 className="text-2xl font-bold mb-4">Sign In</h2>
         {/* Your form or content here */}
         <button className="btn btn-primary">Primary</button>
-=======
+
         <h2 className="text-2xl font-bold mb-4 text-center">Sign In</h2>
->>>>>>> 0c97169 (feat: enhance SignIn page with form fields and collapsible help sections)
+
 
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
          
@@ -133,13 +126,8 @@ const SignIn = () => {
       
 
       </div>
-<<<<<<< HEAD
->>>>>>> 2bc2c6c (feat: integrate Tailwind CSS for styling)
-=======
-        
->>>>>>> 0c97169 (feat: enhance SignIn page with form fields and collapsible help sections)
-=======
->>>>>>> 755a50fa2179b21c2e6c86e6fed53961a4fdcd6e
+
+
     </div>
   )
 }
