@@ -2,6 +2,12 @@
 @import './styles/root.css';
 @import './styles/typography.css';
 @import './styles/utilities.css';
+@import "tailwindcss";
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark, cupcake;
+}
+
+
 
 *, *::before, *::after {
     box-sizing: border-box;
