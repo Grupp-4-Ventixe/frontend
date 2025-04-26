@@ -27,7 +27,8 @@ const SignIn = () => {
 
           <button
             value="Submit"
-            className="btn btn-secondary mt-4"
+            className="btn text-white mt-4"
+            style={{ backgroundColor: '#f26cf9' }}
           >
             Login
           </button>
