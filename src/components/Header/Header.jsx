@@ -1,19 +1,28 @@
 import './Header.css';
 import { Bell, Settings, Search } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 /**
  * Props:
  * - title: huvudrubrik (t.ex. "Dashboard", "Bookings")
- * - breadcrumb: valfri breadcrumb-text, visas som "Dashboard / [breadcrumb]"
  * - userName: namn på inloggad användare (t.ex. "Orlando Laurentius")
  * - userRole: roll för inloggad användare (t.ex. "Admin")
  */
 
-// TODO: Gör breadcrumb dynamisk utifrån aktuell sida när routing är på plats
 // TODO: Gör notification-dot togglable via props
 // TODO: Koppla userName och userRole till auth/data när användarinloggning är på plats
 
-const Header = ({ title = 'Dashboard', breadcrumb, userName = 'Orlando Laurentius', userRole = 'Admin' }) => {
+const breadcrumbMap = {
+  '/dashboard': null, 
+  '/bookings': 'Bookings',
+  '/admin/dashboard': 'Admin Dashboard',
+  '/admin/bookings': 'Admin Bookings',
+};
+
+const Header = ({ title = 'Dashboard', userName = 'Orlando Laurentius', userRole = 'Admin' }) => {
+  const location = useLocation();
+  const breadcrumb = breadcrumbMap[location.pathname] || null;
+
   return (
     <header className="header">
       <div className="header-left">
