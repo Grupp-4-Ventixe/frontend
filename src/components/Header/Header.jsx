@@ -7,10 +7,11 @@ import { useLocation } from 'react-router-dom';
  * - title: huvudrubrik (t.ex. "Dashboard", "Bookings")
  * - userName: namn på inloggad användare (t.ex. "Orlando Laurentius")
  * - userRole: roll för inloggad användare (t.ex. "Admin")
+ * - hasNotification: boolean som styr om en notification-dot ska visas (true = visa, false = göm)
+ *
+ * TODO: Koppla userName och userRole till auth/data när användarinloggning är på plats.
+ * TODO: Koppla hasNotification till riktig notification-data från backend eller context i framtiden.
  */
-
-// TODO: Gör notification-dot togglable via props
-// TODO: Koppla userName och userRole till auth/data när användarinloggning är på plats
 
 const breadcrumbMap = {
   '/dashboard': null, 
@@ -19,7 +20,7 @@ const breadcrumbMap = {
   '/admin/bookings': 'Admin Bookings',
 };
 
-const Header = ({ title = 'Dashboard', userName = 'Orlando Laurentius', userRole = 'Admin' }) => {
+const Header = ({ title = 'Dashboard', userName = 'Orlando Laurentius', userRole = 'Admin', hasNotification = false }) => {
   const location = useLocation();
   const breadcrumb = breadcrumbMap[location.pathname] || null;
 
@@ -45,11 +46,11 @@ const Header = ({ title = 'Dashboard', userName = 'Orlando Laurentius', userRole
         </div>
 
         <button
-          className="icon-button has-notification"
+          className={`icon-button ${hasNotification ? 'has-notification' : ''}`}
           aria-label="Notifications"
         >
           <Bell size={20} />
-          <span className="notification-dot"></span>
+          {hasNotification && <span className="notification-dot"></span>}
         </button>
 
         <button className="icon-button" aria-label="Settings">
