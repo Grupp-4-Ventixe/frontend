@@ -1,9 +1,169 @@
-/* RecentBookings component styles */
-
+/* ================================
+   Wrapper
+================================= */
 .recent-bookings {
-    /* Placeholder styles */
-    padding: 16px;
-    background-color: var(--grey-10);
-    border-radius: var(--radius-lg);
-  }
-  
+  padding: var(--spacing-lg);
+  background-color: var(--grey-10);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-default);
+}
+
+/* ================================
+   Header
+================================= */
+.recent-bookings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  color: var(--cool-grey-100);
+}
+
+.recent-bookings-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* ================================
+   Sökfält
+================================= */
+.search-wrapper {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  left: auto;
+  transform: translateY(-50%);
+  color: var(--grey-70);
+  font-size: 14px;
+}
+
+.recent-bookings-search {
+  padding: var(--spacing-sm) var(--spacing-md);
+  padding-right: 36px;
+  font-size: var(--body-sm);
+  border: none;
+  border-radius: 999px;
+  color: var(--text-color);
+  background-color: var(--grey-20);
+}
+
+/* ================================
+   Filterknapp "This week"
+================================= */
+.week-filter {
+  background-color: var(--cool-grey-20);
+  color: var(--text-color);
+  border: none;
+  border-radius: 999px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--body-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chevron-icon {
+  font-size: 12px;
+  color: var(--grey-70);
+}
+
+/* ================================
+   Table
+================================= */
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--body-sm);
+}
+
+.bookings-table td {
+  padding: var(--spacing-md);
+  border-bottom: none;
+  text-align: left;
+  vertical-align: top;
+  font-size: var(--body-sm);
+  font-weight: var(--font-regular);
+  color: var(--grey-100);
+}
+
+.bookings-table th {
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--grey-30);
+  text-align: left;
+  vertical-align: top;
+  font-size: var(--title-xs);
+  font-weight: var(--font-regular);
+  color: var(--grey-70);
+}
+
+.booking-date {
+  font-size: var(--body-sm);
+  font-weight: var(--font-regular);
+  color: var(--grey-100);
+}
+
+.booking-time {
+  font-size: var(--body-sm);
+  font-weight: var(--font-regular);
+  color: var(--grey-70);
+  margin-top: 2px;
+}
+
+.category {
+  font-size: var(--title-xs);
+  color: var(--grey-70);
+  margin-top: 2px;
+}
+
+.sort-icons-vertical {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+  position: relative;
+  bottom: 2px; 
+}
+
+.column-icon {
+  font-size: 7px; 
+  color: var(--grey-70); 
+  line-height: 1;
+  height: 10px;
+}
+.sort-icons-vertical .column-icon {
+  margin: -2.5px 0;
+}
+
+/* ================================
+   Status badges
+================================= */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: var(--btn-size-sm);
+  font-weight: var(--font-medium);
+  display: inline-block;
+}
+
+.status-badge.confirmed {
+  background-color: var(--status-confirmed);
+  color: var(--primary-100);
+}
+
+.status-badge.pending {
+  background-color: var(--status-pending);
+  color: var(--secondary-100);
+}
+
+.status-badge.cancelled {
+  background-color: var(--status-cancelled);
+  color: var(--cool-grey-100);
+}
+
