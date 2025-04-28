@@ -41,8 +41,8 @@
                                 },
                                 {
                                     layout: PortalLayout,
-                                    protected: true,
-                                    adminOnly: true,
+                                    protected: false,
+                                    adminOnly: false,
                                     children: [
                                         { path: '/admin/dashboard', element: <AdminDashboard /> },
                                         { path: '/admin/bookings', element: <AdminBookings /> },
