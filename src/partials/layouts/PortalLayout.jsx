@@ -1,12 +1,21 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from '../../components/Header/Header'
+import './PortalLayout.css'
 
 const PortalLayout = () => {
   return (
     <div className="portal-layout">
-      <Header title="Dashboard" />
-      <Outlet />
+      <aside className="sidebar">
+        {/* <Navbar /> */}
+      </aside>
+
+      <div className="content-area">
+        <Header title="Dashboard" />
+        <main>
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };
