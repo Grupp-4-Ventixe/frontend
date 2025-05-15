@@ -6,6 +6,7 @@
                             import Unauthorized from "../partials/pages/auth/Unauthorized";
                             import StyleTest from '../partials/pages/StyleTest';
 
+
                             const NotFound = lazy(() => import('../partials/pages/NotFound'))
 
                             const SignUp = lazy(() => import('../partials/pages/auth/SignUp'))
@@ -16,6 +17,8 @@
 
                             const AdminDashboard = lazy(() => import('../partials/pages/admin/Dashboard'))
                             const AdminBookings = lazy(() => import('../partials/pages/admin/Bookings'))
+                            const AdminEvents = lazy(() => import('../partials/pages/admin/Events'))
+
 
                             export const routes = [
                                 {
@@ -46,6 +49,8 @@
                                     children: [
                                         { path: '/admin/dashboard', element: <AdminDashboard /> },
                                         { path: '/admin/bookings', element: <AdminBookings /> },
+                                        { path: '/admin/events', element: <AdminEvents /> },
+
                                     ]
                                 },
 

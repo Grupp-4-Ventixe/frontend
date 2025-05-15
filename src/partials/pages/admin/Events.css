@@ -1,0 +1,27 @@
+/* Container för hela sidan */
+.events-container {
+    padding: var(--spacing-xl);
+  }
+  
+  /* Titel + vyväxlarens wrapper */
+  .events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  /* Gridvy med kort */
+  .event-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+  }
+  
+  /* Listvy */
+  .event-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
