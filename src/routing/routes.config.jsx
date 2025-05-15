@@ -13,9 +13,14 @@
 
                             const UserDashboard = lazy(() => import('../partials/pages/user/Dashboard'))
                             const UserBookings = lazy(() => import('../partials/pages/user/Bookings'))
+                            const UserEvents = lazy(() => import('../partials/pages/user/Events'))
+                            const UserYourTickets = lazy(() => import('../partials/pages/user/YourTickets'))
 
                             const AdminDashboard = lazy(() => import('../partials/pages/admin/Dashboard'))
                             const AdminBookings = lazy(() => import('../partials/pages/admin/Bookings'))
+                            const AdminEvents = lazy(() => import('../partials/pages/admin/Events'))
+                            const AdminInvoices = lazy(() => import('../partials/pages/admin/Invoices'))
+
 
                             export const routes = [
                                 {
@@ -37,19 +42,21 @@
                                     children: [
                                         { path: '/dashboard', element: <UserDashboard /> },
                                         { path: '/bookings', element: <UserBookings /> },
+                                        { path: '/events', element: <UserEvents /> },
+                                        { path: '/your-tickets', element: <UserYourTickets /> },
                                     ]
                                 },
                                 {
                                     layout: PortalLayout,
-                                    protected: false,
-                                    adminOnly: false,
+                                    protected: true,
+                                    adminOnly: true,
                                     children: [
                                         { path: '/admin/dashboard', element: <AdminDashboard /> },
                                         { path: '/admin/bookings', element: <AdminBookings /> },
+                                        { path: '/admin/events', element: <AdminEvents /> },
+                                        { path: '/admin/invoices', element: <AdminInvoices /> },
                                     ]
                                 },
-
-
                                 {
                                     children: [
                                         { path: '*', element: <NotFound /> }
