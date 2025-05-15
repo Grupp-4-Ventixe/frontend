@@ -1,4 +1,5 @@
 import './Navbar.css';
+import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, CalendarDays, Ticket, CheckSquare, CreditCard, LogOut } from 'lucide-react';
 import VentixeLogo from '../../assets/ventixe-logo.svg';
 
@@ -10,17 +11,35 @@ const Navbar = ({ isAdmin = false }) => {
         <div className="logo">
           <img src={VentixeLogo} alt="Ventixe logo" className="logo-img" />
         </div>
-        <ul className="nav-links">
-          <li><LayoutDashboard size={18} /> Dashboard</li>
-          <li><CalendarDays size={18} /> Events</li>
 
+        <ul className="nav-links">
           {isAdmin ? (
             <>
-              <li><CheckSquare size={18} /> Bookings</li>
-              <li><CreditCard size={18} /> Invoices</li>
+              <NavLink to="/admin/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>
+                <LayoutDashboard size={18} /> Dashboard
+              </NavLink>
+              <NavLink to="/admin/events" className={({ isActive }) => isActive ? 'active' : ''}>
+                <CalendarDays size={18} /> Events
+              </NavLink>
+              <NavLink to="/admin/bookings" className={({ isActive }) => isActive ? 'active' : ''}>
+                <CheckSquare size={18} /> Bookings
+              </NavLink>
+              <NavLink to="/admin/invoices" className={({ isActive }) => isActive ? 'active' : ''}>
+                <CreditCard size={18} /> Invoices
+              </NavLink>
             </>
           ) : (
-            <li><Ticket size={18} /> Your tickets</li>
+            <>
+              <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>
+                <LayoutDashboard size={18} /> Dashboard
+              </NavLink>
+              <NavLink to="/events" className={({ isActive }) => isActive ? 'active' : ''}>
+                <CalendarDays size={18} /> Events
+              </NavLink>
+              <NavLink to="/your-tickets" className={({ isActive }) => isActive ? 'active' : ''}>
+                <Ticket size={18} /> Your tickets
+              </NavLink>
+            </>
           )}
         </ul>
       </div>
@@ -36,4 +55,3 @@ const Navbar = ({ isAdmin = false }) => {
 };
 
 export default Navbar;
-
