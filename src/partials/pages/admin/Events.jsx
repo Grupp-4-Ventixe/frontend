@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import EventCard from "../../../components/Events/EventCard";
-import './Events.css';
-
+import EventFilters from "../../../components/Events/EventFilters";
+import "./Events.css";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
-  const [viewMode, setViewMode] = useState("grid"); // grid eller listvy
+  const [viewMode, setViewMode] = useState("grid");
+  const [statusFilter, setStatusFilter] = useState("Active");
 
-  // Hämta (mockade) eventdata efter komponenten mountas
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setEvents([
@@ -30,10 +31,10 @@ const Events = () => {
           startDateTime: "2025-07-01T18:30:00",
           location: "Göteborg",
           price: 499,
-          status: "Draft",
+          status: "Active",
           ticketsSold: 65,
           totalTickets: 200,
-          imageUrl: "/assets/images/adventure.jpg",
+          imageUrl: "/src/assets/Testbild.jpg",
         },
         {
           id: "3",
@@ -42,10 +43,10 @@ const Events = () => {
           startDateTime: "2025-06-20T19:00:00",
           location: "Malmö",
           price: 199,
-          status: "Past",
+          status: "Draft",
           ticketsSold: 65,
           totalTickets: 200,
-          imageUrl: "/assets/images/adventure.jpg",
+          imageUrl: "/src/assets/Testbild.jpg",
         },
         {
           id: "4",
@@ -108,63 +109,47 @@ const Events = () => {
           imageUrl: "/assets/images/adventure.jpg",
         },
       ]);
-    }, 500); // Simulerar fördröjning vid API-anrop
+    }, 500);
 
-    return () => clearTimeout(timer); // Cleanup om komponent tas bort
+    return () => clearTimeout(timer);
   }, []);
+  
+const filteredEvents = events.filter((event) => event.status === statusFilter);
+const statusCounts = {
+  Active: events.filter(e => e.status === "Active").length,
+  Draft: events.filter(e => e.status === "Draft").length,
+  Past: events.filter(e => e.status === "Past").length
+};
 
   return (
-    <div style={{ padding: "2rem" }}>
-      {/* Titel + Vyväxling */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1rem",
-        }}
-      >
-        <h1 className="h2">Alla Event</h1>
+    <div className="events-container">
+      {/* Filtreringsfältet */}
+      <EventFilters
+          viewMode={viewMode}
+          onViewModeChange={setViewMode}
+          statusFilter={statusFilter}
+          onStatusFilterChange={setStatusFilter}
+          statusCounts={statusCounts}
+      />
 
-        {/* Vyväxlare (Grid / Lista) */}
-        <div>
-          <button
-            className={`button ${
-              viewMode === "grid" ? "button-primary" : "button-secondary"
-            }`}
-            onClick={() => setViewMode("grid")}
-          >
-            Grid
-          </button>
-          <button
-            className={`button ${
-              viewMode === "list" ? "button-primary" : "button-secondary"
-            }`}
-            style={{ marginLeft: "0.5rem" }}
-            onClick={() => setViewMode("list")}
-          >
-            Lista
-          </button>
-        </div>
-      </div>
 
-      {/* Laddar... */}
-      {events.length === 0 && <p>Laddar event...</p>}
-
-      {/* Lista av EventCards */}
+      {filteredEvents.length === 0 ? (
+      <p>Inga event att visa</p>
+    ) : (
       <div className={viewMode === "grid" ? "event-grid" : "event-list"}>
-        {events.map((event) => (
-          <EventCard
-            key={event.id}
-            event={event}
-            isAdmin={true}
-            viewMode={viewMode}
-          />
-        ))}
-      </div>
+        {filteredEvents.map((event) => (
+
+            <EventCard
+              key={event.id}
+              event={event}
+              isAdmin={true}
+              viewMode={viewMode}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
 export default Events;
-
