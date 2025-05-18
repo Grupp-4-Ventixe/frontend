@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./EventCard.css";
 
 const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClick }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const {
     eventName,
     category,
@@ -11,7 +13,7 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
     startDateTime,
     ticketsSold,
     totalTickets,
-    imageUrl
+    imageUrl,
   } = event;
 
   const percentageSold = Math.round((ticketsSold / totalTickets) * 100);
@@ -27,10 +29,39 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
       </div>
 
       <div className="event-info">
-        <p className="event-date">
-          {new Date(startDateTime).toLocaleDateString()} –{" "}
-          {new Date(startDateTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-        </p>
+        <div className="event-date-row">
+          <p className="event-date">
+            {new Date(startDateTime).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric"
+                })}{" "}
+                –{" "}
+                {new Date(startDateTime).toLocaleTimeString("en-US", {
+                  hour: "numeric",
+                  minute: "2-digit",
+                  hour12: true
+                })}
+          </p>
+
+          {isAdmin && (
+            <div className="event-options-wrapper" onClick={(e) => e.stopPropagation()}>
+              <button
+                className="ellipsis-button"
+                onClick={() => setMenuOpen((prev) => !prev)}
+              >
+                ...
+              </button>
+              {menuOpen && (
+                <div className="card-menu">
+                  <button onClick={() => onEdit?.(event.id)}>Edit</button>
+                  <button onClick={() => onDelete?.(event.id)}>Delete</button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
         <h3 className="event-title">{eventName}</h3>
         <p className="event-location">{location}</p>
 
@@ -41,32 +72,10 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
           <span className="percentage">{percentageSold}%</span>
           <div className="event-price">${price}</div>
         </div>
-
-        {isAdmin && (
-          <div className="event-actions">
-            <button
-              className="btn-edit"
-              onClick={(e) => {
-                e.stopPropagation();
-                onEdit?.(event.id);
-              }}
-            >
-              Edit
-            </button>
-            <button
-              className="btn-delete"
-              onClick={(e) => {
-                e.stopPropagation();
-                onDelete?.(event.id);
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
 };
+
 
 export default EventCard;
