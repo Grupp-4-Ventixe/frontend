@@ -298,5 +298,5 @@
 .card-menu button:hover {
   background-color: var(--grey-20);
   transition: background 0.5s ease;
-
+  
 }
