@@ -18,6 +18,16 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
 
   const percentageSold = Math.round((ticketsSold / totalTickets) * 100);
 
+   const handleEdit = () => {
+    setMenuOpen(false); // stäng menyn
+    onEdit?.(event.id); // anropa onEdit med event-id
+  };
+
+  const handleDelete = () => {
+    setMenuOpen(false);
+    onDelete?.(event.id);
+  };
+
   return (
     <div className={`event-card ${viewMode}`} onClick={onClick}>
       <div className="event-image-wrapper">
@@ -54,8 +64,8 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
               </button>
               {menuOpen && (
                 <div className="card-menu">
-                  <button onClick={() => onEdit?.(event.id)}>Edit</button>
-                  <button onClick={() => onDelete?.(event.id)}>Delete</button>
+                  <button onClick={handleEdit}>Edit</button>
+                  <button onClick={handleDelete}>Delete</button>
                 </div>
               )}
             </div>
