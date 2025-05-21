@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { updateEvent } from "../../api/events"; 
 import "./EditEventModal.css";
 
-const EditEventModal = ({ isOpen, onClose, event }) => {
+const EditEventModal = ({ isOpen, onClose, event, onEventUpdated }) => {
   const [formData, setFormData] = useState({
     eventName: "",
     category: "",
-    imageUrl: "",
+    imageUrl: "https://placehold.co/300x200?text=Event+Image",
     startDate: "",
     endDate: "",
     location: "",
@@ -19,9 +20,9 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
       setFormData({
         eventName: event.eventName || "",
         category: event.category || "",
-        imageUrl: event.imageUrl || "",
+        imageUrl: event.imageUrl || "https://placehold.co/300x200?text=Event+Image",
         startDate: event.startDateTime?.split("T")[0] || "",
-        endDate: event.endDateTime?.split("T")[0] || "", // om du har endDateTime
+        endDate: event.endDateTime?.split("T")[0] || "",
         location: event.location || "",
         description: event.description || "",
         price: event.price || 0,
@@ -30,24 +31,42 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
     }
   }, [event]);
 
-  if (!isOpen || !event) return null;
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Här behöver logik läggas till för att spara ändringarna
-    console.log("Saving edited event:", formData);
-    onClose(); 
+    try {
+      const updatedEvent = {
+        eventName: formData.eventName,
+        category: formData.category,
+        imageUrl: formData.imageUrl,
+        startDateTime: formData.startDate,
+        endDateTime: formData.endDate || null,
+        location: formData.location,
+        description: formData.description,
+        price: parseFloat(formData.price),
+        status: formData.status,
+      };
+
+      await updateEvent(event.id, updatedEvent);
+      if (onEventUpdated) onEventUpdated(); 
+      onClose();
+    } catch (error) {
+      console.error("Error updating event:", error);
+    }
   };
+
+  if (!isOpen || !event) return null;
 
   return (
     <div className="create-event-modal-overlay">
       <div className="create-event-modal">
-        <button type="button" className="btn close" onClick={onClose}>X</button>
+        <button type="button" className="btn close" onClick={onClose}>
+          X
+        </button>
         <h2 className="modal-title">Edit Event</h2>
 
         <form className="modal-form" onSubmit={handleSubmit}>
@@ -97,8 +116,12 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
           </label>
 
           <div className="modal-actions">
-            <button type="button" className="btn cancel" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn create">Save Changes</button>
+            <button type="button" className="btn cancel" onClick={onClose}>
+              Cancel
+            </button>
+            <button type="submit" className="btn create">
+              Save Changes
+            </button>
           </div>
         </form>
       </div>

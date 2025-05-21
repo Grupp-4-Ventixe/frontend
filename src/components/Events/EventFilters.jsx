@@ -15,24 +15,22 @@ const EventFilters = ({
   statusFilter, 
   onStatusFilterChange, 
   statusCounts,
+  availableStatuses = ["Active", "Draft", "Past"] 
 }) => {
   return (
     <div className="filters-wrapper">
       <div className="status-filters">
-        {["Active", "Draft", "Past"].map((status) => (
-            <button
+        {availableStatuses.map((status) => (
+          <button
             key={status}
             className={`status-button ${statusFilter === status ? "active" : ""}`}
             onClick={() => onStatusFilterChange(status)}
-            >
+          >
             {status}{" "}
-            <span>
-                ({statusCounts[status] || 0})
-            </span>
-            </button>
+            <span>({statusCounts[status] || 0})</span>
+          </button>
         ))}
       </div>
-
 
       <div className="search-and-filters">
         <div className="search-wrapper">
