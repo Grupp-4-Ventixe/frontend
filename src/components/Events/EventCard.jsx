@@ -19,8 +19,8 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
   const percentageSold = Math.round((ticketsSold / totalTickets) * 100);
 
    const handleEdit = () => {
-    setMenuOpen(false); // stäng menyn
-    onEdit?.(event.id); // anropa onEdit med event-id
+    setMenuOpen(false); 
+    onEdit?.(event.id); 
   };
 
   const handleDelete = () => {

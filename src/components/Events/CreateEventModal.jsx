@@ -1,7 +1,48 @@
-import React from "react";
-import "./CreateEventModal.css"; 
+//Tagit hjälp av chatGPT 4o
+import React, { useState } from "react";
+import "./CreateEventModal.css";
+import { createEvent } from "../../api/events";
 
-const CreateEventModal = ({ isOpen, onClose }) => {
+const CreateEventModal = ({ isOpen, onClose, onEventCreated }) => {
+  const [formData, setFormData] = useState({
+    eventName: "",
+    category: "",
+    imageUrl: "https://placehold.co/300x200?text=Event+Image",
+    startDateTime: "",
+    endDateTime: "",
+    location: "",
+    description: "",
+    price: 0,
+    status: "Draft"
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newEvent = {
+      eventName: formData.eventName,
+      category: formData.category,
+      imageUrl: formData.imageUrl || null,
+      startDateTime: formData.startDateTime,
+      endDateTime: formData.endDateTime || null,
+      location: formData.location,
+      description: formData.description,
+      price: parseFloat(formData.price),
+      status: formData.status
+    };
+
+    const success = await createEvent(newEvent);
+    if (success) {
+      onEventCreated(); 
+      onClose(); 
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -10,51 +51,44 @@ const CreateEventModal = ({ isOpen, onClose }) => {
         <button type="button" className="btn close" onClick={onClose}>X</button>
         <h2 className="modal-title">Create New Event</h2>
 
-        <form className="modal-form">
+        <form className="modal-form" onSubmit={handleSubmit}>
           <label>
             Event Name
-            <input type="text" placeholder="Enter event name" className="input" />
+            <input name="eventName" type="text" value={formData.eventName} onChange={handleChange} className="input" required />
           </label>
-
           <label>
             Category
-            <input type="text" placeholder="Music, Conference..." className="input" />
+            <input name="category" type="text" value={formData.category} onChange={handleChange} className="input" required />
           </label>
-
           <label>
             Image URL
-            <input type="url" placeholder="https://example.com/image.jpg" className="input" />
+            <input name="imageUrl" type="url" value={formData.imageUrl} onChange={handleChange} className="input" />
           </label>
-
           <div className="date-row">
             <label>
               Start Date
-              <input type="date" className="input" />
+              <input name="startDateTime" type="datetime-local" value={formData.startDateTime} onChange={handleChange} className="input" required />
             </label>
             <label>
               End Date
-              <input type="date" className="input" />
+              <input name="endDateTime" type="datetime-local" value={formData.endDateTime} onChange={handleChange} className="input" />
             </label>
           </div>
-
           <label>
             Location
-            <input type="text" placeholder="City or venue" className="input" />
+            <input name="location" type="text" value={formData.location} onChange={handleChange} className="input" required />
           </label>
-
           <label>
             Description
-            <textarea placeholder="Event details..." className="textarea" />
+            <textarea name="description" value={formData.description} onChange={handleChange} className="textarea" required />
           </label>
-
           <label>
             Price
-            <input type="number" min="0" placeholder="0" className="input" />
+            <input name="price" type="number" min="0" value={formData.price} onChange={handleChange} className="input" required />
           </label>
-
-           <label>
+          <label>
             Status
-            <select className="input">
+            <select name="status" value={formData.status} onChange={handleChange} className="input">
               <option value="Draft">Draft</option>
               <option value="Active">Active</option>
               <option value="Past">Past</option>
@@ -62,7 +96,6 @@ const CreateEventModal = ({ isOpen, onClose }) => {
           </label>
 
           <div className="modal-actions">
-            
             <button type="button" className="btn cancel" onClick={onClose}>Cancel</button>
             <button type="submit" className="btn create">Create</button>
           </div>
