@@ -38,7 +38,7 @@
                                 },
                                 {
                                     layout: PortalLayout,
-                                    protected: true,
+                                    protected: false,
                                     children: [
                                         { path: '/dashboard', element: <UserDashboard /> },
                                         { path: '/bookings', element: <UserBookings /> },
@@ -48,8 +48,8 @@
                                 },
                                 {
                                     layout: PortalLayout,
-                                    protected: true,
-                                    adminOnly: true,
+                                    protected: false,
+                                    adminOnly: false,
                                     children: [
                                         { path: '/admin/dashboard', element: <AdminDashboard /> },
                                         { path: '/admin/bookings', element: <AdminBookings /> },

@@ -9,7 +9,13 @@ import {
 } from "lucide-react";
 import "./EventFilters.css";
 
-const EventFilters = ({ viewMode, onViewModeChange, statusFilter, onStatusFilterChange, statusCounts }) => {
+const EventFilters = ({ 
+  viewMode, 
+  onViewModeChange, 
+  statusFilter, 
+  onStatusFilterChange, 
+  statusCounts,
+}) => {
   return (
     <div className="filters-wrapper">
       <div className="status-filters">

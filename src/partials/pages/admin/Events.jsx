@@ -3,6 +3,7 @@ import EventCard from "../../../components/Events/EventCard";
 import EventFilters from "../../../components/Events/EventFilters";
 import EventModal from "../../../components/Events/CreateEventModal";
 import EditEventModal from "../../../components/Events/EditEventModal";
+import { fetchAllEvents } from "../../../api/events"; 
 import "./Events.css";
 
 const Events = () => {
@@ -11,145 +12,52 @@ const Events = () => {
   const [statusFilter, setStatusFilter] = useState("Active");
   const [showModal, setShowModal] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-const [selectedEventId, setSelectedEventId] = useState(null);
-  
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setEvents([
-        {
-          id: "1",
-          eventName: "ReactConf 2025",
-          category: "Konferens",
-          startDateTime: "2025-09-14T10:00:00",
-          location: "Stockholm",
-          price: 299,
-          status: "Active",
-          ticketsSold: 65,
-          totalTickets: 200,
-          imageUrl: "/src/assets/Testbild.jpg",
-        },
-        {
-          id: "2",
-          eventName: "Sommarmusikfest",
-          category: "Musik",
-          startDateTime: "2025-07-01T18:30:00",
-          location: "Göteborg",
-          price: 499,
-          status: "Active",
-          ticketsSold: 65,
-          totalTickets: 200,
-          imageUrl: "/src/assets/Testbild.jpg",
-        },
-        {
-          id: "3",
-          eventName: "Teaterkväll",
-          category: "Kultur",
-          startDateTime: "2025-06-20T19:00:00",
-          location: "Malmö",
-          price: 199,
-          status: "Draft",
-          ticketsSold: 65,
-          totalTickets: 200,
-          imageUrl: "/src/assets/Testbild.jpg",
-        },
-        {
-          id: "4",
-          eventName: "Test",
-          category: "Test",
-          startDateTime: "2025-06-20T19:00:00",
-          location: "Test",
-          price: 123,
-          status: "Past",
-          ticketsSold: 65,
-          totalTickets: 200,
-          imageUrl: "/assets/images/adventure.jpg",
-        },
-        {
-          id: "5",
-          eventName: "Test",
-          category: "Test",
-          startDateTime: "2025-06-20T19:00:00",
-          location: "Test",
-          price: 123,
-          status: "Past",
-          ticketsSold: 65,
-          totalTickets: 200,
-          imageUrl: "/assets/images/adventure.jpg",
-        },
-        {
-          id: "6",
-          eventName: "Test",
-          category: "Test",
-          startDateTime: "2025-06-20T19:00:00",
-          location: "Test",
-          price: 123,
-          status: "Past",
-          ticketsSold: 65,
-          totalTickets: 200,
-          imageUrl: "/assets/images/adventure.jpg",
-        },
-        {
-          id: "7",
-          eventName: "Test",
-          category: "Test",
-          startDateTime: "2025-06-20T19:00:00",
-          location: "Test",
-          price: 123,
-          status: "Past",
-          ticketsSold: 65,
-          totalTickets: 200,
-          imageUrl: "/assets/images/adventure.jpg",
-        },
-        {
-          id: "8",
-          eventName: "Test",
-          category: "Test",
-          startDateTime: "2025-06-20T19:00:00",
-          location: "Test",
-          price: 123,
-          status: "Past",
-          ticketsSold: 65,
-          totalTickets: 200,
-          imageUrl: "/assets/images/adventure.jpg",
-        },
-      ]);
-    }, 500);
+  const [selectedEventId, setSelectedEventId] = useState(null);
 
-    return () => clearTimeout(timer);
+  useEffect(() => {
+    const loadEvents = async () => {
+      const data = await fetchAllEvents(); 
+      setEvents(data);
+    };
+
+    loadEvents();
   }, []);
 
-const filteredEvents = events.filter((event) => event.status === statusFilter);
-const statusCounts = {
-  Active: events.filter(e => e.status === "Active").length,
-  Draft: events.filter(e => e.status === "Draft").length,
-  Past: events.filter(e => e.status === "Past").length
-};
-const selectedEvent = events.find(e => e.id === selectedEventId);
-const handleEdit = (eventId) => {
-  setSelectedEventId(eventId);
-  setIsEditModalOpen(true);
-};
+  const filteredEvents = events.filter((event) => event.status === statusFilter);
+  const statusCounts = {
+    Active: events.filter((e) => e.status === "Active").length,
+    Draft: events.filter((e) => e.status === "Draft").length,
+    Past: events.filter((e) => e.status === "Past").length,
+  };
+  const selectedEvent = events.find((e) => e.id === selectedEventId);
+
+  const handleEdit = (eventId) => {
+    setSelectedEventId(eventId);
+    setIsEditModalOpen(true);
+  };
+
   return (
     <div className="events-container">
       <div className="create-event-wrapper">
-        <button className="create-event-btn" onClick={() => setShowModal(true)}>Create Event</button>
-               <EventModal isOpen={showModal} onClose={() => setShowModal(false)} />
+        <button className="create-event-btn" onClick={() => setShowModal(true)}>
+          Create Event
+        </button>
+        <EventModal isOpen={showModal} onClose={() => setShowModal(false)} />
       </div>
 
       <EventFilters
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
-          statusFilter={statusFilter}
-          onStatusFilterChange={setStatusFilter}
-          statusCounts={statusCounts}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
+        statusFilter={statusFilter}
+        onStatusFilterChange={setStatusFilter}
+        statusCounts={statusCounts}
       />
-      
-      {filteredEvents.length === 0 ? (
-      <p>No events to show</p>
-    ) : (
-      <div className={viewMode === "grid" ? "event-grid" : "event-list"}>
-        {filteredEvents.map((event) => (
 
+      {filteredEvents.length === 0 ? (
+        <p>No events to show</p>
+      ) : (
+        <div className={viewMode === "grid" ? "event-grid" : "event-list"}>
+          {filteredEvents.map((event) => (
             <EventCard
               key={event.id}
               event={event}
@@ -160,6 +68,7 @@ const handleEdit = (eventId) => {
           ))}
         </div>
       )}
+
       <EditEventModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
