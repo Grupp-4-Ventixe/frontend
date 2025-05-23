@@ -1,7 +1,15 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./EventCard.css";
 
-const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClick }) => {
+const EventCard = ({
+  event,
+  isAdmin,
+  viewMode = "grid",
+  onEdit,
+  onDelete,
+  detailsPath = "/admin/events/details"
+}) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const {
@@ -16,11 +24,14 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
     imageUrl,
   } = event;
 
-  const percentageSold = Math.round((ticketsSold / totalTickets) * 100);
+  const percentageSold =
+    totalTickets && totalTickets > 0
+      ? Math.round((ticketsSold / totalTickets) * 100)
+      : 0;
 
-   const handleEdit = () => {
-    setMenuOpen(false); 
-    onEdit?.(event.id); 
+  const handleEdit = () => {
+    setMenuOpen(false);
+    onEdit?.(event.id);
   };
 
   const handleDelete = () => {
@@ -29,33 +40,36 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
   };
 
   return (
-    <div className={`event-card ${viewMode}`} onClick={onClick}>
-      <div className="event-image-wrapper">
+    <div className={`event-card ${viewMode}`}>
+      <Link to={`${detailsPath}/${event.id}`} className="event-image-wrapper">
         <img src={imageUrl} alt={eventName} className="event-image" />
         <div className="event-tags">
           <span className="category-badge">{category}</span>
           <span className={`status-badge ${status?.toLowerCase()}`}>{status}</span>
         </div>
-      </div>
+      </Link>
 
       <div className="event-info">
         <div className="event-date-row">
           <p className="event-date">
             {new Date(startDateTime).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric"
-                })}{" "}
-                –{" "}
-                {new Date(startDateTime).toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true
-                })}
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}{" "}
+            –{" "}
+            {new Date(startDateTime).toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+              hour12: true,
+            })}
           </p>
 
           {isAdmin && (
-            <div className="event-options-wrapper" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="event-options-wrapper"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 className="ellipsis-button"
                 onClick={() => setMenuOpen((prev) => !prev)}
@@ -77,7 +91,10 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
 
         <div className="event-meta">
           <div className="progress-bar-wrapper">
-            <div className="progress-bar" style={{ width: `${percentageSold}%` }}></div>
+            <div
+              className="progress-bar"
+              style={{ width: `${percentageSold}%` }}
+            ></div>
           </div>
           <span className="percentage">{percentageSold}%</span>
           <div className="event-price">${price}</div>
@@ -86,6 +103,5 @@ const EventCard = ({ event, isAdmin, viewMode = "grid", onEdit, onDelete, onClic
     </div>
   );
 };
-
 
 export default EventCard;

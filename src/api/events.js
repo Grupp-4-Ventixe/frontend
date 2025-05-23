@@ -1,4 +1,3 @@
-//Tagit hjälp av chatGPT 4o
 const API_BASE_URL = "https://localhost:7098/api"; // lokal url backend (byt till azure senare)
 
 export async function fetchAllEvents() {
@@ -10,6 +9,18 @@ export async function fetchAllEvents() {
   } catch (error) {
     console.error("Error fetching events:", error);
     return [];
+  }
+}
+
+export async function fetchEventById(id) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/events/${id}`);
+    if (!response.ok) throw new Error("Failed to fetch event by ID");
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching event by ID:", error);
+    return null;
   }
 }
 

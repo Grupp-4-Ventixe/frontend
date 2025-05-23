@@ -1,0 +1,31 @@
+.terms-box {
+    margin-top: var(--spacing-xl);
+    background-color: var(--grey-10);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-default);
+    color: var(--text-color);
+  }
+  
+  .terms-box h2 {
+    font-size: var(--h4-size);
+    font-weight: var(--font-semibold);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .terms-list {
+    padding-left: var(--spacing-md);
+    font-size: var(--body-md);
+    line-height: 1.6;
+  }
+  
+  .terms-list > li {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .terms-list ul {
+    list-style-type: disc;
+    margin-left: var(--spacing-md);
+    margin-top: var(--spacing-xs);
+  }
+  

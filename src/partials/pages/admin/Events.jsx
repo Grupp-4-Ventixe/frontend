@@ -1,10 +1,10 @@
-//Tagit hjälp av chatGPT 4o
+// Tagit hjälp av chatGPT 4o
 import React, { useEffect, useState } from "react";
 import EventCard from "../../../components/Events/EventCard";
 import EventFilters from "../../../components/Events/EventFilters";
 import EventModal from "../../../components/Events/CreateEventModal";
 import EditEventModal from "../../../components/Events/EditEventModal";
-import { fetchAllEvents, deleteEvent } from "../../../api/events"; 
+import { fetchAllEvents, deleteEvent } from "../../../api/events";
 import "./Events.css";
 
 const Events = () => {
@@ -16,21 +16,22 @@ const Events = () => {
   const [selectedEventId, setSelectedEventId] = useState(null);
 
   useEffect(() => {
-
     loadEvents();
   }, []);
 
   const loadEvents = async () => {
-  const data = await fetchAllEvents(); 
-  setEvents(data);
+    const data = await fetchAllEvents();
+    setEvents(data);
   };
 
   const filteredEvents = events.filter((event) => event.status === statusFilter);
+
   const statusCounts = {
     Active: events.filter((e) => e.status === "Active").length,
     Draft: events.filter((e) => e.status === "Draft").length,
     Past: events.filter((e) => e.status === "Past").length,
   };
+
   const selectedEvent = events.find((e) => e.id === selectedEventId);
 
   const handleEdit = (eventId) => {
@@ -39,16 +40,16 @@ const Events = () => {
   };
 
   const handleDelete = async (eventId) => {
-  const confirm = window.confirm("Are you sure you want to delete this event?");
-  if (!confirm) return;
+    const confirm = window.confirm("Are you sure you want to delete this event?");
+    if (!confirm) return;
 
-  try {
-    await deleteEvent(eventId);
-    setEvents((prev) => prev.filter((e) => e.id !== eventId));
-  } catch (error) {
-    console.error("Error deleting event:", error);
-  }
-};
+    try {
+      await deleteEvent(eventId);
+      setEvents((prev) => prev.filter((e) => e.id !== eventId));
+    } catch (error) {
+      console.error("Error deleting event:", error);
+    }
+  };
 
   return (
     <div className="events-container">
@@ -56,11 +57,11 @@ const Events = () => {
         <button className="create-event-btn" onClick={() => setShowModal(true)}>
           Create Event
         </button>
-        <EventModal 
-          isOpen={showModal} 
+        <EventModal
+          isOpen={showModal}
           onClose={() => setShowModal(false)}
-          onEventCreated={loadEvents} 
-         />
+          onEventCreated={loadEvents}
+        />
       </div>
 
       <EventFilters
@@ -83,6 +84,7 @@ const Events = () => {
               viewMode={viewMode}
               onEdit={handleEdit}
               onDelete={handleDelete}
+              variant="default"
             />
           ))}
         </div>

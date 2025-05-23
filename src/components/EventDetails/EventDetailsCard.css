@@ -1,0 +1,135 @@
+.event-details-card {
+  background-color: var(--grey-10);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-default);
+  overflow: hidden;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 500px;
+}
+
+.event-details-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-color: var(--grey-40);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.event-details-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.event-details-tags {
+  position: absolute;
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  right: var(--spacing-sm);
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.category-badge,
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: var(--btn-size-xs);
+  font-weight: var(--font-medium);
+}
+
+.category-badge {
+  background-color: var(--cool-grey-20);
+  color: var(--secondary-100);
+}
+
+.status-badge.active {
+  background-color: var(--status-confirmed);
+  color: var(--primary-100);
+}
+
+.status-badge.draft {
+  background-color: var(--status-pending);
+  color: var(--primary-100);
+}
+
+.status-badge.past {
+  background-color: var(--status-cancelled);
+  color: var(--primary-100);
+}
+
+.event-details-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.event-details-title {
+  font-size: var(--h4-size);
+  font-weight: var(--font-bold);
+  color: var(--text-color);
+  margin: 0;
+}
+
+.event-details-date,
+.event-details-location {
+  font-size: var(--body-sm);
+  color: var(--cool-grey-80);
+  margin: 0;
+}
+
+.event-details-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.event-details-price {
+  font-size: var(--body-md);
+  color: var(--primary-100);
+  font-weight: var(--font-semibold);
+}
+
+.event-details-progress-bar-wrapper {
+  background-color: var(--cool-grey-30);
+  height: 8px;
+  width: 100px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.event-details-progress-bar {
+  height: 100%;
+  background-color: var(--primary-100);
+  transition: width 0.3s ease;
+}
+
+.event-details-percentage {
+  font-size: var(--body-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-color);
+}
+
+.event-details-description {
+  margin-top: var(--spacing-sm);
+}
+
+.event-details-description h4 {
+  font-size: var(--title-md);
+  margin-bottom: var(--spacing-xs);
+}
+
+.event-details-description p {
+  font-size: var(--body-sm);
+  color: var(--grey-90);
+  line-height: 1.6;
+}

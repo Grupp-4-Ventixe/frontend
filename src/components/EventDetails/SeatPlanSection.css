@@ -1,0 +1,63 @@
+.seatplan-content {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.seatplan-image {
+  flex: 1 1 50%;
+}
+
+.seatplan-image img {
+  width: 100%;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+}
+
+.seatplan-legend {
+  flex: 1 1 300px;
+  list-style: none;
+  padding: 0;
+  font-size: var(--body-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.seatplan-legend li {
+  display:inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--body-sm);
+}
+
+.seatplan-legend .price {
+  font-weight: var(--font-semibold);
+  color: var(--primary-100);
+  margin-left: var(--spacing-lg);
+}
+
+.diamond { color: #e0b3ff; }
+.platinum { color: #e6ccff; }
+.gold { color: #c29f42; }
+.silver { color: #b0bec5; }
+.bronze { color: #cd7f32; }
+.general { color: #e0e0e0; }
+.backstage { color: #ff4786; }
+.vip { color: var(--primary-100); }
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--grey-30);
+  margin: var(--spacing-lg) 0;
+}
+
+  .dots-btn {
+    background: none;
+    border: none;
+    font-size: var(--h5-size);
+    color: var(--grey-60);
+    cursor: pointer;
+    
+}

@@ -1,0 +1,25 @@
+.event-details-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    align-items: flex-start;
+  }
+  
+  .left-column {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    min-width: 300px;
+  }
+  
+  .right-column {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    min-width: 250px;
+  }
+  
