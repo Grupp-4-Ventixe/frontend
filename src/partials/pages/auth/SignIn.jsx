@@ -1,37 +1,80 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SignIn = () => {
   const { signIn } = useAuth()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [rememberMe, setRememberMe] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault() 
+    setLoading(true) 
+    setError("") 
+
+    try {
+      
+      await signIn({ email, password, rememberMe })
+      navigate("/dashboard") 
+    } catch (err) {
+ 
+      setError(err.message)
+    } finally {
+      setLoading(false) 
+    }
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen  bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
       <div className="bg-white p-8 rounded-3xl shadow-md w-full max-w-sm">
 
         <h2 className="text-2xl text-center font-bold mb-4">Sign In</h2>
-
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4">
+       <form onSubmit={handleSubmit}>
+           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4">
           <label className="label mt-2">Email</label>
-          <input type="email" className="input" placeholder="Email" />
+          <input 
+          type="email"
+              className="input"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} 
+              required
+          />
 
           <label className="label">Password</label>
-          <input type="password" className="input mb-2" placeholder="Password" />
+          <input 
+            type="password"
+            className="input mb-2"
+            placeholder="Password"
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
           <fieldset className="fieldset">
             <label className="label">
-              <input type="checkbox" defaultChecked className="toggle toggle-neutral" />
+              <input 
+              type="checkbox"
+              checked={rememberMe} 
+              onChange={(e) => setRememberMe(e.target.checked)} 
+              className="toggle toggle-neutral"
+              />
               Remember me
             </label>
           </fieldset>
 
           <button
-            value="Submit"
-            className="btn text-white mt-4"
-            style={{ backgroundColor: '#f26cf9' }}
-          >
-            Login
-          </button>
+              type="submit"
+              className="btn text-white mt-4"
+              style={{ backgroundColor: '#f26cf9' }}
+              disabled={loading} 
+            >
+              {loading ? "Logging in..." : "Login"}
+            </button>
 
           <div className="flex w-full flex-col">
             <Link
@@ -63,6 +106,10 @@ const SignIn = () => {
           </button>
 
         </fieldset>
+
+       </form>
+
+       
 
         
 
