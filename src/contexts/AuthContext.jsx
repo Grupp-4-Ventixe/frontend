@@ -8,10 +8,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
   const [error, setError] = useState(null)
+
+
     
    const signIn = async ({ email, password, rememberMe }) => {
     try {
-      const response = await fetch("https://localhost:7102/api/auth/signin", {
+      const response = await fetch("https://authservice-ventixe-fagve2emhbdnfpcn.swedencentral-01.azurewebsites.net/api/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -45,6 +47,7 @@ export const AuthProvider = ({ children }) => {
 
     }
 
+
     return (
     <AuthContext.Provider
       value={{
@@ -61,6 +64,8 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   )
 }
+
+
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
