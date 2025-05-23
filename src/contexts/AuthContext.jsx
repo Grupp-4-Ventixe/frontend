@@ -2,27 +2,68 @@ import { createContext, useContext, useState } from "react"
 
 const AuthContext = createContext()
 
-export const AuthProvider = ({children}) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [user, setUser] = useState(null)
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [user, setUser] = useState(null)
+  const [token, setToken] = useState(null)
+  const [error, setError] = useState(null)
     
-    const signIn = async ({email, password, isPersistent}) => {
+   const signIn = async ({ email, password, rememberMe }) => {
+    try {
+      const response = await fetch("https://localhost:7102/api/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password, rememberMe })
+      })
 
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.errors ? data.errors.join(", ") : "Login failed")
+      }
+
+      const data = await response.json()
+      setIsAuthenticated(true)
+      setToken(data.token)
+      setUser({ email }) 
+      setError(null) 
+      return true
+    } catch (error) {
+      setIsAuthenticated(false)
+      setToken(null)
+      setUser(null)
+      setIsAdmin(false)
+      setError(error.message)
+      throw error
     }
+  }
+
 
     const signUp = async ({email}) => {
 
     }
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, isAdmin, user, signUp, signIn}}>
-            {children}
-        </AuthContext.Provider>
-    )
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        isAdmin,
+        user,
+        token,
+        error,
+        signUp,
+        signIn
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
+    if (!context) throw new Error("useAuth must be used within an AuthProvider")
     return context
 }
