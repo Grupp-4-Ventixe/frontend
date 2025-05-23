@@ -43,8 +43,9 @@ const Events = () => {
             <EventCard
               key={event.id}
               event={event}
-              isAdmin={false} 
+              isAdmin={false}
               viewMode={viewMode}
+              detailsPath="/events/details"
             />
           ))}
         </div>
