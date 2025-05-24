@@ -11,22 +11,26 @@ const SignIn = () => {
   const [error, setError] = useState("")
   const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault() 
-    setLoading(true) 
-    setError("") 
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
-      
-      await signIn({ email, password, rememberMe })
-      navigate("/dashboard") 
+        await signIn({ email, password, rememberMe });
+
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user.role.toLowerCase() === "admin") {
+            navigate("/admin/dashboard");
+        } else {
+            navigate("/dashboard"); 
+        }
     } catch (err) {
- 
-      setError(err.message)
+        setError(err.message);
     } finally {
-      setLoading(false) 
+        setLoading(false);
     }
-  }
+};
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen  bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">

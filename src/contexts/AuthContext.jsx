@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 
 const AuthContext = createContext()
 
@@ -8,37 +8,73 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
   const [error, setError] = useState(null)
-    
-   const signIn = async ({ email, password, rememberMe }) => {
+  const [userLoading, setUserLoading] = useState(true);
+
+  const signIn = async ({ email, password }) => {
     try {
-      const response = await fetch("https://localhost:7102/api/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password, rememberMe })
-      })
+        const response = await fetch("https://authservice-ventixe-fagve2emhbdnfpcn.swedencentral-01.azurewebsites.net/api/auth/signin", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+        });
 
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.errors ? data.errors.join(", ") : "Login failed")
-      }
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Login failed"); 
+        }
 
-      const data = await response.json()
-      setIsAuthenticated(true)
-      setToken(data.token)
-      setUser({ email }) 
-      setError(null) 
-      return true
+        const data = await response.json();
+        console.log("Backend Response Data:", data); // Log the backend response
+
+        // Save token and user details in localStorage
+        localStorage.setItem("token", data.token);
+        const userObject = {
+            email: data.email,
+            name: data.name,
+            role: data.role,
+        };
+        localStorage.setItem("user", JSON.stringify(userObject));
+
+        console.log("User being stored in localStorage:", userObject); // Log the stored user object
+
+        // Update state
+        setToken(data.token);
+        setIsAuthenticated(true);
+        setUser(userObject);
+        setIsAdmin(data.role.toLowerCase() === "admin");
+        setError(null); 
+
+        return true; // Indicate success
     } catch (error) {
-      setIsAuthenticated(false)
-      setToken(null)
-      setUser(null)
-      setIsAdmin(false)
-      setError(error.message)
-      throw error
+        console.error("Error during sign-in:", error);
+        setError(error.message); 
+        throw error; 
     }
-  }
+};
+
+    useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+    console.log("Stored User:", storedUser)
+
+    if (storedToken && storedUser) {
+       const parsedUser = JSON.parse(storedUser);
+
+        console.log("Restoring User from LocalStorage:", parsedUser);
+
+        setIsAuthenticated(true);
+        setUser(JSON.parse(storedUser));
+        setIsAdmin(JSON.parse(storedUser).role === "admin");
+        setToken(storedToken);
+    } else {
+        setIsAuthenticated(false);
+        setUser(null);
+        setIsAdmin(false);
+        setToken(null);
+    }
+}, []);
 
 
     const signUp = async ({email}) => {
@@ -51,16 +87,22 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         isAdmin,
         user,
+        userLoading,
         token,
         error,
         signUp,
         signIn
       }}
+
+      
     >
-      {children}
+      {children}  
     </AuthContext.Provider>
+  
   )
+ 
 }
+
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
