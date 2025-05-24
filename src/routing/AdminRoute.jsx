@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 const AdminRoute = ({ children }) => {
     const { isAuthenticated, isAdmin } = useAuth();
 
-    /*
+    
         if (!isAuthenticated) {
             return <Navigate to="/login" replace />;
         }
@@ -13,7 +13,9 @@ const AdminRoute = ({ children }) => {
         if (!isAdmin) {
             return <Navigate to="/denied" replace />;
         }
-    */
+
+    
+    
 
     return children;
 };
