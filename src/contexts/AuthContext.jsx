@@ -25,11 +25,19 @@ export const AuthProvider = ({ children }) => {
         const data = await response.json()
         throw new Error(data.errors ? data.errors.join(", ") : "Login failed")
       }
+    
 
       const data = await response.json()
       setIsAuthenticated(true)
       setToken(data.token)
-      setUser({ email }) 
+      setUser({ 
+        email: data.Email,
+        name: data.Name,
+        role: data.Role 
+      });
+      setIsAdmin(data.Role === "admin");
+       
+      localStorage.setItem('token', data.Token);
       setError(null) 
       return true
     } catch (error) {
@@ -40,13 +48,17 @@ export const AuthProvider = ({ children }) => {
       setError(error.message)
       throw error
     }
+    
+    
   }
+
+  console.log("isAuthenticated:", isAuthenticated);
+console.log("isAdmin:", isAdmin);
 
 
     const signUp = async ({email}) => {
 
     }
-
 
     return (
     <AuthContext.Provider
@@ -59,12 +71,16 @@ export const AuthProvider = ({ children }) => {
         signUp,
         signIn
       }}
+
+      
     >
       {children}
+      
     </AuthContext.Provider>
+  
   )
+ 
 }
-
 
 
 export const useAuth = () => {
