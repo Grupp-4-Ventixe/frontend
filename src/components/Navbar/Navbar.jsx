@@ -31,9 +31,13 @@ const Navbar = () => {
               <NavLink to="/admin/bookings" className={({ isActive }) => isActive ? 'active' : ''}>
                 <CheckSquare size={18} /> Bookings
               </NavLink>
-              <NavLink to="/admin/invoices" className={({ isActive }) => isActive ? 'active' : ''}>
-                <CreditCard size={18} /> Invoices
-              </NavLink>
+              
+              {/* 
+              Tillfälligt bortkommenterad - Invoices-sidan och dess service är inte färdigställda.
+              Lägg tillbaka länken när backend och UI är klart.
+              // <NavLink to="/admin/invoices" className={({ isActive }) => isActive ? 'active' : ''}>
+              //   <CreditCard size={18} /> Invoices
+              // </NavLink> */}
             </>
           ) : (
             <>
