@@ -74,6 +74,7 @@ export const AuthProvider = ({ children }) => {
         setIsAdmin(false);
         setToken(null);
     }
+        setUserLoading(false);
 }, []);
 
 
