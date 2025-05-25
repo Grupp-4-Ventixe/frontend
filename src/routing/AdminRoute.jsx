@@ -3,19 +3,19 @@ import { Navigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 const AdminRoute = ({ children }) => {
-    const { isAuthenticated, isAdmin } = useAuth();
+    const { isAuthenticated, isAdmin, userLoading } = useAuth();
 
-    
-        if (!isAuthenticated) {
-            return <Navigate to="/login" replace />;
-        }
+    if (userLoading) {
+        return <div>Loading...</div>;
+    }
 
-        if (!isAdmin) {
-            return <Navigate to="/denied" replace />;
-        }
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
 
-    
-    
+    if (!isAdmin) {
+        return <Navigate to="/denied" replace />;
+    }
 
     return children;
 };
