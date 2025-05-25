@@ -1,18 +1,14 @@
 import './Header.css';
 import { Bell, Settings, Search } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 /**
- * - Dynamisk breadcrumb och sidrubrik baserat på aktuell URL-path
- * - Inloggad användares namn och roll (placeholder tills auth är på plats)
+ * Header-komponent som visar:
+ * - Dynamisk breadcrumb och sidrubrik baserat på aktuell URL
+ * - Inloggad användares namn och roll (från AuthContext)
  * - Sökfält samt ikoner för notifikationer och inställningar
  *
- * Props:
- * - userName: namn på inloggad användare (t.ex. "Orlando Laurentius")
- * - userRole: roll för inloggad användare (t.ex. "Admin")
- * - hasNotification: boolean som styr om en notification-dot ska visas (true = visa, false = göm)
- *
- * TODO: Koppla userName och userRole till auth/data när användarinloggning är på plats.
  * TODO: Koppla hasNotification till riktig notification-data från backend eller context i framtiden.
  */
 
@@ -29,10 +25,9 @@ const breadcrumbMap = {
 
 
 const Header = ({
-  userName = 'Orlando Laurentius',
-  userRole = 'Admin',
   hasNotification = false
 }) => {
+  const { user } = useAuth();
   const location = useLocation();
   const breadcrumb = breadcrumbMap[location.pathname] || null;
   const title = breadcrumb || 'Dashboard';
@@ -73,8 +68,8 @@ const Header = ({
         <div className="user-info">
           <div className="user-avatar" />
           <div>
-            <p className="user-name">{userName}</p>
-            <p className="user-role">{userRole}</p>
+            <p className="user-name">{user?.name || "Unknown user"}</p>
+            <p className="user-role">{user?.role || "Unknown role"}</p>
           </div>
         </div>
       </div>
