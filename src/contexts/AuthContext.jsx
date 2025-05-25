@@ -91,7 +91,8 @@ export const AuthProvider = ({ children }) => {
         token,
         error,
         signUp,
-        signIn
+        signIn,
+        signOut
       }}
 
       
@@ -100,6 +101,15 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   
   )
+
+  const signOut = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  setToken(null);
+  setUser(null);
+  setIsAuthenticated(false);
+  setIsAdmin(false);
+};
  
 }
 
