@@ -4,9 +4,8 @@ import { LayoutDashboard, CalendarDays, Ticket, CheckSquare, CreditCard, LogOut 
 import VentixeLogo from '../../assets/ventixe-logo.svg';
 import { useAuth } from '../../contexts/AuthContext';
 
-// TODO: Byt ut isAdmin-prop mot faktisk roll från autentisering när auth är på plats
-const Navbar = ({ isAdmin = false }) => {
-  const { signOut } = useAuth();
+const Navbar = () => {
+  const { isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
