@@ -4,9 +4,8 @@ import { LayoutDashboard, CalendarDays, Ticket, CheckSquare, CreditCard, LogOut 
 import VentixeLogo from '../../assets/ventixe-logo.svg';
 import { useAuth } from '../../contexts/AuthContext';
 
-// TODO: Byt ut isAdmin-prop mot faktisk roll från autentisering när auth är på plats
-const Navbar = ({ isAdmin = false }) => {
-  const { signOut } = useAuth();
+const Navbar = () => {
+  const { isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -32,9 +31,13 @@ const Navbar = ({ isAdmin = false }) => {
               <NavLink to="/admin/bookings" className={({ isActive }) => isActive ? 'active' : ''}>
                 <CheckSquare size={18} /> Bookings
               </NavLink>
-              <NavLink to="/admin/invoices" className={({ isActive }) => isActive ? 'active' : ''}>
-                <CreditCard size={18} /> Invoices
-              </NavLink>
+              
+              {/* 
+              Tillfälligt bortkommenterad - Invoices-sidan och dess service är inte färdigställda.
+              Lägg tillbaka länken när backend och UI är klart.
+              // <NavLink to="/admin/invoices" className={({ isActive }) => isActive ? 'active' : ''}>
+              //   <CreditCard size={18} /> Invoices
+              // </NavLink> */}
             </>
           ) : (
             <>
