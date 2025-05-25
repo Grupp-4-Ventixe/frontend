@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://localhost:7098/api"; // lokal url backend (byt till azure senare)
+const API_BASE_URL = "https://ventixe-4-eventservice.azurewebsites.net/api"; 
 
 export async function fetchAllEvents() {
   try {
