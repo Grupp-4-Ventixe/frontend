@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
 
         setIsAuthenticated(true);
         setUser(JSON.parse(storedUser));
-        setIsAdmin(JSON.parse(storedUser).role === "admin");
+        setIsAdmin(JSON.parse(storedUser).role.toLowerCase() === "admin");
         setToken(storedToken);
     } else {
         setIsAuthenticated(false);
