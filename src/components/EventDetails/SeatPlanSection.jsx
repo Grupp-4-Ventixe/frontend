@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import VenueMap from '../../assets/Venue-Map.svg';
 import './SeatPlanSection.css';
 
 const SeatPlanSection = () => {
@@ -24,7 +25,7 @@ const SeatPlanSection = () => {
 
       <div className="seatplan-content">
         <div className="seatplan-image">
-          <img src="/src/assets/Venue-Map.svg" alt="Seat Plan" />
+          <img src={VenueMap} alt="Seat Plan" />
             <button className="dots-btn" onClick={() => setMenuOpen(!menuOpen)}>⋯</button>
           {menuOpen && (
             <div className="dropdown-menu">
