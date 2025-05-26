@@ -22,3 +22,25 @@
   gap: var(--spacing-xl);
   min-width: 250px;
 }
+
+.book-btn-container {
+  margin-top: 24px;
+  text-align: right;
+  max-width: fit-content;
+}
+
+.btn-primary {
+  background-color: var(--primary-100);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--btn-size-md);
+  box-shadow: var(--shadow-default);
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-90);
+}
