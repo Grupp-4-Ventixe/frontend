@@ -5,6 +5,7 @@ import "./Bookings.css";
 const Bookings = () => {
   const { id } = useParams(); 
   const navigate = useNavigate();
+  
 
   const [formData, setFormData] = useState({
     eventId: id,
@@ -18,6 +19,7 @@ const Bookings = () => {
   });
 
   const [message, setMessage] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     setFormData((prev) => ({ ...prev, eventId: id }));
@@ -32,31 +34,39 @@ const Bookings = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const res = await fetch("https://ventixe-4-bookingservice.azurewebsites.net/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+  try {
+    const res = await fetch("https://ventixe-4-bookingservice.azurewebsites.net/api/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-      if (res.ok) {
-        setMessage("Bokningen lyckades!");
+    if (res.ok) {
+      setShowPopup(true); 
+      setTimeout(() => {
         navigate("/events"); 
-      } else {
-        setMessage("Bokningen misslyckades.");
-      }
-    } catch (err) {
-      console.error("Booking error:", err);
-      setMessage("Något gick fel.");
+      }, 2000); 
+    } else {
+      setMessage("Booking failed.");
     }
-  };
+  } catch (err) {
+    console.error("Booking error:", err);
+    setMessage("Something went wrong.");
+  }
+};
 
   return (
     <div className="booking-container">
       <h2 className="h3">Book event</h2>
-
+        {showPopup && (
+          <div className="popup-overlay">
+            <div className="popup-content">
+              <h4 className="h4"> Thank you for your booking!</h4>
+            </div>
+          </div>
+        )}
       <form onSubmit={handleSubmit} className="booking-form">
         <div className="form-group">
           <label>First Name</label>
@@ -95,8 +105,7 @@ const Bookings = () => {
 
         <button type="submit" className="btn-primary">Book</button>
       </form>
-
-      {message && <p className="booking-message">{message}</p>}
+      {message && <p className="error-message">{message}</p>}
     </div>
   );
 };

@@ -26,6 +26,7 @@
 .book-btn-container {
   margin-top: 24px;
   text-align: right;
+  max-width: fit-content;
 }
 
 .btn-primary {

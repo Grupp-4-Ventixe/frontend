@@ -33,7 +33,12 @@ const EventDetails = () => {
   return (
     <div className="event-details-layout">
       <div className="left-column">
-        <EventDetailsCard event={event} />
+        <EventDetailsCard event={event} /> 
+        <div className="book-btn-container" style={{ marginTop: "2rem" }}>
+          <button className="btn-primary" onClick={handleBookClick}>
+            Book event
+          </button>
+        </div>
         <TermsAndConditions terms={event.termsAndConditions} />
         <MerchandiseSection merchandise={event.merchandise} />
       </div>
@@ -42,11 +47,7 @@ const EventDetails = () => {
         <SeatPlanSection seatPlan={event.seatPlan} />
         <EventPackages packages={event.packages} isAdmin={false} />
 
-        <div className="book-btn-container" style={{ marginTop: "2rem" }}>
-          <button className="btn-primary" onClick={handleBookClick}>
-            Book event
-          </button>
-        </div>
+       
       </div>
     </div>
   );
