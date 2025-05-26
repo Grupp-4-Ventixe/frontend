@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
 
         setIsAuthenticated(true);
         setUser(JSON.parse(storedUser));
-        setIsAdmin(JSON.parse(storedUser).role === "admin");
+        setIsAdmin(JSON.parse(storedUser).role.toLowerCase() === "admin");
         setToken(storedToken);
     } else {
         setIsAuthenticated(false);
@@ -74,12 +74,22 @@ export const AuthProvider = ({ children }) => {
         setIsAdmin(false);
         setToken(null);
     }
+        setUserLoading(false);
 }, []);
 
 
     const signUp = async ({email}) => {
 
     }
+
+    const signOut = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  setToken(null);
+  setUser(null);
+  setIsAuthenticated(false);
+  setIsAdmin(false);
+};
 
     return (
     <AuthContext.Provider
@@ -91,7 +101,8 @@ export const AuthProvider = ({ children }) => {
         token,
         error,
         signUp,
-        signIn
+        signIn,
+        signOut
       }}
 
       
@@ -100,7 +111,6 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   
   )
- 
 }
 
 

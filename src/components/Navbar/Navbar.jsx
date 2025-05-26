@@ -1,10 +1,17 @@
 import './Navbar.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, CalendarDays, Ticket, CheckSquare, CreditCard, LogOut } from 'lucide-react';
 import VentixeLogo from '../../assets/ventixe-logo.svg';
+import { useAuth } from '../../contexts/AuthContext';
 
-// TODO: Byt ut isAdmin-prop mot faktisk roll från autentisering när auth är på plats
-const Navbar = ({ isAdmin = false }) => {
+const Navbar = () => {
+  const { isAdmin, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    signOut();
+    navigate("/login");
+  };
   return (
     <nav className="navbar">
       <div className="navbar-top">
@@ -24,9 +31,13 @@ const Navbar = ({ isAdmin = false }) => {
               <NavLink to="/admin/bookings" className={({ isActive }) => isActive ? 'active' : ''}>
                 <CheckSquare size={18} /> Bookings
               </NavLink>
-              <NavLink to="/admin/invoices" className={({ isActive }) => isActive ? 'active' : ''}>
-                <CreditCard size={18} /> Invoices
-              </NavLink>
+              
+              {/* 
+              Tillfälligt bortkommenterad - Invoices-sidan och dess service är inte färdigställda.
+              Lägg tillbaka länken när backend och UI är klart.
+              // <NavLink to="/admin/invoices" className={({ isActive }) => isActive ? 'active' : ''}>
+              //   <CreditCard size={18} /> Invoices
+              // </NavLink> */}
             </>
           ) : (
             <>
@@ -45,7 +56,7 @@ const Navbar = ({ isAdmin = false }) => {
       </div>
 
       <div className="navbar-bottom">
-        <button className="sign-out-btn">
+        <button className="sign-out-btn" onClick={handleSignOut}>
           <LogOut size={18} />
           Sign Out
         </button>
