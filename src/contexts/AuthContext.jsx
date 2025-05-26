@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
         }
 
         const data = await response.json();
-        console.log("Backend Response Data:", data); // Log the backend response
+        console.log("Backend Response Data:", data); 
 
-        // Save token and user details in localStorage
+       
         localStorage.setItem("token", data.token);
         const userObject = {
             email: data.email,
@@ -37,16 +37,16 @@ export const AuthProvider = ({ children }) => {
         };
         localStorage.setItem("user", JSON.stringify(userObject));
 
-        console.log("User being stored in localStorage:", userObject); // Log the stored user object
+        console.log("User being stored in localStorage:", userObject); 
 
-        // Update state
+       
         setToken(data.token);
         setIsAuthenticated(true);
         setUser(userObject);
         setIsAdmin(data.role.toLowerCase() === "admin");
         setError(null); 
 
-        return true; // Indicate success
+        return true; 
     } catch (error) {
         console.error("Error during sign-in:", error);
         setError(error.message); 
@@ -78,11 +78,33 @@ export const AuthProvider = ({ children }) => {
 }, []);
 
 
-    const signUp = async ({email}) => {
+   const signUp = async ({ email, password, confirmPassword }) => {
+    try {
+        const response = await fetch("https://authservice-ventixe-fagve2emhbdnfpcn.swedencentral-01.azurewebsites.net/api/auth/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password, confirmPassword }),
+        });
 
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Signup failed");
+        }
+
+        const data = await response.json();
+        console.log("User registered successfully:", data);
+
+        return true;
+    } catch (error) {
+        console.error("Error during sign-up:", error);
+        setError(error.message);
+        throw error;
     }
+};
 
-    const signOut = () => {
+  const signOut = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   setToken(null);
