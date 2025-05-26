@@ -1,43 +1,100 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'
 
 const SignUp = () => {
-  try {
-    const { signUp } = useAuth()
+  const { signUp } = useAuth()
+  const navigate = useNavigate()
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
+
+  const [error, setError] = useState(null)
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
   }
-  catch { }
-  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.")
+      return
+    }
+
+    try {
+      await signUp(formData)
+      navigate('/login') 
+    } catch (err) {
+      setError(err.message || 'Signup failed.')
+    }
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
       <div className="bg-white p-8 rounded-3xl shadow-md max-w-md w-full">
-
         <h1 className="text-2xl font-bold mb-2 text-center">Create an Account</h1>
 
-        <fieldset className="fieldset bg-base-200 border-base-300 mx-auto rounded-box w-xs border p-4">
+        <form onSubmit={handleSubmit}>
+          <fieldset className="bg-base-200 border-base-300 mx-auto rounded-box w-xs border p-4">
 
-          <label className="label">Email</label>
-          <input type="email" className="input mb-4" placeholder="Email" />
+            {error && <p className="text-red-500 mb-4">{error}</p>}
 
-          <label className="label">Password</label>
-          <input type="password" className="input mb-4" placeholder="Password" />
+            <label className="label">Email</label>
+            <input
+              type="email"
+              name="email"
+              className="input mb-4"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
 
-          <label className="label">Confirm Password</label>
-          <input type="password" className="input mb-1.5" placeholder="Confirm Password" />
+            <label className="label">Password</label>
+            <input
+              type="password"
+              name="password"
+              className="input mb-4"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
 
-          <button type="submit" className="btn mt-4 text-white" style={{ backgroundColor: '#f26cf9' }}>Sign Up</button>
+            <label className="label">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              className="input mb-1.5"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
 
-          <Link to="/login" className="btn btn-link">
-            I Already Have An Account
-          </Link>
+           <div className="flex flex-col items-center">
+            <button
+              type="submit"
+              className="btn mt-4 text-white w-full"
+              style={{ backgroundColor: '#f26cf9' }}
+            >
+              Sign Up
+            </button>
 
-          
-
-        </fieldset>
-        
+            <Link to="/login" className="btn btn-link mt-2">
+              I Already Have An Account
+            </Link>
+          </div>
+          </fieldset>
+        </form>
       </div>
-
       <footer className="footer footer-horizontal footer-center  text-neutral-content rounded p-10">
  
  <nav>
@@ -82,9 +139,6 @@ const SignUp = () => {
  </aside>
 </footer>
     </div>
-
-
-
   )
 }
 
