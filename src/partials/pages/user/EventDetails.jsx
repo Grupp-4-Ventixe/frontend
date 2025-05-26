@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchEventById } from "../../../api/events";
 
 import EventDetailsCard from "../../../components/EventDetails/EventDetailsCard";
@@ -12,6 +12,7 @@ import "./EventDetails.css";
 
 const EventDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [event, setEvent] = useState(null);
 
   useEffect(() => {
@@ -23,7 +24,11 @@ const EventDetails = () => {
     loadEvent();
   }, [id]);
 
-  if (!event) return <p>Laddar event...</p>;
+  const handleBookClick = () => {
+    navigate(`/bookings/${id}`);
+  };
+
+  if (!event) return <p>Loading event...</p>;
 
   return (
     <div className="event-details-layout">
@@ -36,6 +41,12 @@ const EventDetails = () => {
       <div className="right-column">
         <SeatPlanSection seatPlan={event.seatPlan} />
         <EventPackages packages={event.packages} isAdmin={false} />
+
+        <div className="book-btn-container" style={{ marginTop: "2rem" }}>
+          <button className="btn-primary" onClick={handleBookClick}>
+            Book event
+          </button>
+        </div>
       </div>
     </div>
   );

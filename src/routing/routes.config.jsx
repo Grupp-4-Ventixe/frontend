@@ -65,6 +65,14 @@
                                         )
                                     },
                                     {
+                                        path: '/bookings/:id', //Lagt till denna 
+                                        element: (
+                                            <ProtectedRoute>
+                                                <UserBookings />
+                                            </ProtectedRoute>
+                                        )
+                                    },
+                                    {
                                         path: '/events',
                                         element: (
                                             <ProtectedRoute>
